@@ -1210,9 +1210,11 @@ func resourceServiceV1Update(d *schema.ResourceData, meta interface{}) error {
 				}
 
 				log.Printf("[DEBUG] Fastly Conditions Removal opts: %#v", opts)
-				err := conn.DeleteCondition(&opts)
-				if err != nil {
-					return err
+				if !strings.Contains(opts.Name, "Waf") && !strings.Contains(opts.Name, "WAF") {
+					err := conn.DeleteCondition(&opts)
+					if err != nil {
+						return err
+					}
 				}
 			}
 
@@ -1912,9 +1914,11 @@ func resourceServiceV1Update(d *schema.ResourceData, meta interface{}) error {
 				}
 
 				log.Printf("[DEBUG] Fastly Response Object removal opts: %#v", opts)
-				err := conn.DeleteResponseObject(&opts)
-				if err != nil {
-					return err
+				if !strings.Contains(opts.Name, "Waf") && !strings.Contains(opts.Name, "WAF") {
+					err := conn.DeleteResponseObject(&opts)
+					if err != nil {
+						return err
+					}
 				}
 			}
 
